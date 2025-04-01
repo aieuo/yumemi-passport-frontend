@@ -1,7 +1,5 @@
-import PopulationGraph, {
-  PopulationGraphData,
-} from "@/app/components/PopulationGraph/PopulationGraph";
 import { Meta, StoryObj } from "@storybook/react";
+import PopulationGraph, { PopulationGraphData } from "./PopulationGraph";
 
 const meta: Meta<typeof PopulationGraph> = {
   title: "components/PopulationGraph",
