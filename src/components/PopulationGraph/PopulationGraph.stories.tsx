@@ -19,11 +19,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const generateData = () => [
-  { year: 1980, population: Math.floor(Math.random() * 1000) },
-  { year: 1990, population: Math.floor(Math.random() * 1000) },
-  { year: 2000, population: Math.floor(Math.random() * 1000) },
-  { year: 2010, population: Math.floor(Math.random() * 1000) },
-  { year: 2020, population: Math.floor(Math.random() * 1000) },
+  { year: 1980, value: Math.floor(Math.random() * 1000) },
+  { year: 1990, value: Math.floor(Math.random() * 1000) },
+  { year: 2000, value: Math.floor(Math.random() * 1000) },
+  { year: 2010, value: Math.floor(Math.random() * 1000) },
+  { year: 2020, value: Math.floor(Math.random() * 1000) },
 ];
 
 const data1: PopulationGraphData = {

@@ -1,12 +1,14 @@
 "use client";
 
-import PopulationGraph, {
-  PopulationGraphData,
-} from "@/components/PopulationGraph/PopulationGraph";
+import PopulationGraph from "@/components/PopulationGraph/PopulationGraph";
 import PrefectureList from "@/components/PrefectureList/PrefectureList";
-import { fetchPrefectures } from "@/lib/api";
+import { fetchPopulationComposition, fetchPrefectures } from "@/lib/api";
+import { PopulationComposition } from "@/types/data";
+import { populationListToGraphData } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+
+type PopulationCompositions = Record<number, PopulationComposition>;
 
 export default function Home() {
   const {
@@ -17,33 +19,43 @@ export default function Home() {
     queryKey: ["prefectures"],
     queryFn: fetchPrefectures,
   });
+
   const [selectedPrefectures, setSelectedPrefectures] = useState<number[]>([]);
 
-  const populations = [
-    {
-      name: "東京",
-      data: [
-        { year: 1980, population: Math.floor(Math.random() * 1000) },
-        { year: 1990, population: Math.floor(Math.random() * 1000) },
-        { year: 2000, population: Math.floor(Math.random() * 1000) },
-        { year: 2010, population: Math.floor(Math.random() * 1000) },
-        { year: 2020, population: Math.floor(Math.random() * 1000) },
-      ],
-    },
-  ] as PopulationGraphData[];
+  const [populations, setPopulations] = useState<PopulationCompositions>({});
 
   const handlePrefectureChecked = (code: number, checked: boolean) => {
-    setSelectedPrefectures((selected) => {
-      if (checked) {
-        selected.push(code);
-        return Array.from(new Set(selected));
-      }
+    if (checked) {
+      setSelectedPrefectures((selected) => {
+        return Array.from(new Set([...selected, code]));
+      });
 
+      // 人口データをAPIから取得していなければ取得する
+      (async () => {
+        if (!populations[code]) {
+          try {
+            const population = await fetchPopulationComposition(code);
+            setPopulations({
+              ...populations,
+              [code]: population,
+            });
+          } catch (e: unknown) {
+            if (e instanceof Error) {
+              alert(e.message);
+            }
+            return;
+          }
+        }
+      })();
+      return;
+    }
+
+    setSelectedPrefectures((selected) => {
       return selected.filter((c) => c !== code);
     });
   };
 
-  if (isPending) {
+  if (isPending || !prefectures) {
     return <p className="mt-8 text-center sm:mt-12">読み込み中...</p>;
   }
 
@@ -54,6 +66,13 @@ export default function Home() {
       </div>
     );
   }
+
+  const graphData = populationListToGraphData(
+    populations,
+    prefectures,
+    selectedPrefectures,
+    "総人口",
+  );
 
   return (
     <main>
@@ -72,7 +91,7 @@ export default function Home() {
           <h2 className="text-xl font-bold">総人口</h2>
           <div className="mt-1 max-w-full overflow-x-auto">
             <div className="aspect-video w-full min-w-[40rem]">
-              <PopulationGraph populations={populations} />
+              <PopulationGraph populations={graphData} />
             </div>
           </div>
         </div>

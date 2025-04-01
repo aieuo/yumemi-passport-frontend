@@ -40,7 +40,7 @@ export default function PopulationGraph({ populations }: PopulationGraphProps) {
         >
           <Label position="insideBottom">年度</Label>
         </XAxis>
-        <YAxis dataKey="population">
+        <YAxis dataKey="value">
           <Label angle={-90} position="insideLeft">
             人数
           </Label>
@@ -50,7 +50,7 @@ export default function PopulationGraph({ populations }: PopulationGraphProps) {
 
         {populations.map((data) => (
           <Line
-            dataKey="population"
+            dataKey="value"
             data={data.data}
             name={data.name}
             key={data.name}
