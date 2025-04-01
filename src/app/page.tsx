@@ -30,29 +30,32 @@ export default function Home() {
         return Array.from(new Set([...selected, code]));
       });
 
-      // 人口データをAPIから取得していなければ取得する
-      (async () => {
-        if (!populations[code]) {
-          try {
-            const population = await fetchPopulationComposition(code);
-            setPopulations((prev) => ({
-              ...prev,
-              [code]: population,
-            }));
-          } catch (e: unknown) {
-            if (e instanceof Error) {
-              alert(e.message);
-            }
-            return;
-          }
-        }
-      })();
+      tryFetchPopulation(code).then();
       return;
     }
 
     setSelectedPrefectures((selected) => {
       return selected.filter((c) => c !== code);
     });
+  };
+
+  const tryFetchPopulation = async (prefCode: number) => {
+    // 人口データをAPIから取得していなければ取得する
+    if (populations[prefCode]) {
+      return;
+    }
+
+    try {
+      const population = await fetchPopulationComposition(prefCode);
+      setPopulations((prev) => ({
+        ...prev,
+        [prefCode]: population,
+      }));
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        alert(e.message);
+      }
+    }
   };
 
   if (isPending || !prefectures) {
