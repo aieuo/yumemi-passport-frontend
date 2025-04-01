@@ -35,10 +35,10 @@ export default function Home() {
         if (!populations[code]) {
           try {
             const population = await fetchPopulationComposition(code);
-            setPopulations({
-              ...populations,
+            setPopulations((prev) => ({
+              ...prev,
               [code]: population,
-            });
+            }));
           } catch (e: unknown) {
             if (e instanceof Error) {
               alert(e.message);
