@@ -1,95 +1,68 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import PopulationGraph, {
+  PopulationGraphData,
+} from "@/components/PopulationGraph/PopulationGraph";
+import PrefectureList from "@/components/PrefectureList/PrefectureList";
+import { Prefecture } from "@/types/data";
+import { useState } from "react";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const prefectures = [
+    { prefCode: 1, prefName: "北海道" },
+    { prefCode: 2, prefName: "青森県" },
+    { prefCode: 3, prefName: "岩手県" },
+    { prefCode: 4, prefName: "宮城県" },
+    { prefCode: 5, prefName: "秋田県" },
+  ] as Prefecture[];
+  const [selectedPrefectures, setSelectedPrefectures] = useState<number[]>([]);
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const populations = [
+    {
+      name: "東京",
+      data: [
+        { year: 1980, population: Math.floor(Math.random() * 1000) },
+        { year: 1990, population: Math.floor(Math.random() * 1000) },
+        { year: 2000, population: Math.floor(Math.random() * 1000) },
+        { year: 2010, population: Math.floor(Math.random() * 1000) },
+        { year: 2020, population: Math.floor(Math.random() * 1000) },
+      ],
+    },
+  ] as PopulationGraphData[];
+
+  const handlePrefectureChecked = (code: number, checked: boolean) => {
+    setSelectedPrefectures((selected) => {
+      if (checked) {
+        selected.push(code);
+        return Array.from(new Set(selected));
+      }
+
+      return selected.filter((c) => c !== code);
+    });
+  };
+
+  return (
+    <main>
+      <div className="mx-auto mt-8 max-w-[60rem] px-4 sm:mt-12">
+        <div>
+          <h2 className="text-xl font-bold">都道府県</h2>
+          <div className="mt-1">
+            <PrefectureList
+              prefectures={prefectures}
+              selectedPrefectureCodes={selectedPrefectures}
+              onChecked={handlePrefectureChecked}
             />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+          </div>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <div className="mt-6 sm:mt-10">
+          <h2 className="text-xl font-bold">総人口</h2>
+          <div className="mt-1 max-w-full overflow-x-auto">
+            <div className="aspect-video w-full min-w-[40rem]">
+              <PopulationGraph populations={populations} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }
