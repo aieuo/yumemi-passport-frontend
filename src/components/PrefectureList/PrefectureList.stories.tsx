@@ -1,6 +1,6 @@
-import PrefectureList from "@/app/components/PrefectureList/PrefectureList";
 import { Prefecture } from "@/types/data";
 import { Meta, StoryObj } from "@storybook/react";
+import PrefectureList from "./PrefectureList";
 
 const meta: Meta<typeof PrefectureList> = {
   title: "components/PrefectureList",
