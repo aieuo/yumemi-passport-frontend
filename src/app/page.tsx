@@ -4,17 +4,19 @@ import PopulationGraph, {
   PopulationGraphData,
 } from "@/components/PopulationGraph/PopulationGraph";
 import PrefectureList from "@/components/PrefectureList/PrefectureList";
-import { Prefecture } from "@/types/data";
+import { fetchPrefectures } from "@/lib/api";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 export default function Home() {
-  const prefectures = [
-    { prefCode: 1, prefName: "北海道" },
-    { prefCode: 2, prefName: "青森県" },
-    { prefCode: 3, prefName: "岩手県" },
-    { prefCode: 4, prefName: "宮城県" },
-    { prefCode: 5, prefName: "秋田県" },
-  ] as Prefecture[];
+  const {
+    isPending,
+    error: prefectureError,
+    data: prefectures,
+  } = useQuery({
+    queryKey: ["prefectures"],
+    queryFn: fetchPrefectures,
+  });
   const [selectedPrefectures, setSelectedPrefectures] = useState<number[]>([]);
 
   const populations = [
@@ -40,6 +42,18 @@ export default function Home() {
       return selected.filter((c) => c !== code);
     });
   };
+
+  if (isPending) {
+    return <p className="mt-8 text-center sm:mt-12">読み込み中...</p>;
+  }
+
+  if (prefectureError) {
+    return (
+      <div className="mx-auto mt-8 max-w-[30rem] rounded-md border border-red-300 bg-red-50 p-2 sm:mt-12">
+        <p className="text-center">{prefectureError.message}</p>
+      </div>
+    );
+  }
 
   return (
     <main>
