@@ -15,6 +15,7 @@ const eslintConfig = [
     "next/typescript",
     "prettier",
     "plugin:storybook/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
   ),
 ];
 
