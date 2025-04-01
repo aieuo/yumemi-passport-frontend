@@ -30,7 +30,7 @@ export default function Home() {
         return Array.from(new Set([...selected, code]));
       });
 
-      tryFetchPopulation(code).then();
+      fetchPopulationIfNeeded(code).then();
       return;
     }
 
@@ -39,7 +39,7 @@ export default function Home() {
     });
   };
 
-  const tryFetchPopulation = async (prefCode: number) => {
+  const fetchPopulationIfNeeded = async (prefCode: number) => {
     // 人口データをAPIから取得していなければ取得する
     if (populations[prefCode]) {
       return;
