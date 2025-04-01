@@ -1,5 +1,5 @@
-import CheckBox from "@/app/components/CheckBox/CheckBox";
 import { Prefecture } from "@/types/data";
+import CheckBox from "../CheckBox/CheckBox";
 
 interface PrefectureListProps {
   prefectures: Prefecture[];
