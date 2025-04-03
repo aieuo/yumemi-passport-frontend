@@ -1,11 +1,15 @@
 "use client";
 
+import DataTypeSelector from "@/components/DataTypeSelector/DataTypeSelector";
+import MenuButton from "@/components/MenuButton/MenuButton";
 import PopulationGraph from "@/components/PopulationGraph/PopulationGraph";
 import PrefectureList from "@/components/PrefectureList/PrefectureList";
+import { DATA_TYPES } from "@/consts/consts";
 import { fetchPopulationComposition, fetchPrefectures } from "@/lib/api";
 import { PopulationComposition } from "@/types/data";
 import { populationListToGraphData } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
+import { DataType } from "csstype";
 import { useState } from "react";
 
 type PopulationCompositions = Record<number, PopulationComposition>;
@@ -23,6 +27,10 @@ export default function Home() {
   const [selectedPrefectures, setSelectedPrefectures] = useState<number[]>([]);
 
   const [populations, setPopulations] = useState<PopulationCompositions>({});
+  const [selectedDataType, setSelectedDataType] = useState<DataType>("総人口");
+
+  const [showDataTypeSelector, setShowDataTypeSelector] =
+    useState<boolean>(false);
 
   const handlePrefectureChecked = (code: number, checked: boolean) => {
     if (checked) {
@@ -74,7 +82,7 @@ export default function Home() {
     populations,
     prefectures,
     selectedPrefectures,
-    "総人口",
+    selectedDataType,
   );
 
   return (
@@ -91,7 +99,21 @@ export default function Home() {
           </div>
         </div>
         <div className="mt-6 sm:mt-10">
-          <h2 className="text-xl font-bold">総人口</h2>
+          <div className="relative flex items-center justify-between gap-1.5">
+            <h2 className="text-xl font-bold">{selectedDataType}</h2>
+            <MenuButton
+              onClick={() => setShowDataTypeSelector((prev) => !prev)}
+            />
+            {showDataTypeSelector && (
+              <div className="absolute top-0 right-5 z-100">
+                <DataTypeSelector
+                  types={DATA_TYPES}
+                  selected={selectedDataType}
+                  onSelected={setSelectedDataType}
+                />
+              </div>
+            )}
+          </div>
           <div className="mt-1 max-w-full overflow-x-auto">
             <div className="aspect-video w-full min-w-[40rem]">
               <PopulationGraph populations={graphData} />
