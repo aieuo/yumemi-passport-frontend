@@ -6,10 +6,9 @@ import PopulationGraph from "@/components/PopulationGraph/PopulationGraph";
 import PrefectureList from "@/components/PrefectureList/PrefectureList";
 import { DATA_TYPES } from "@/consts/consts";
 import { fetchPopulationComposition, fetchPrefectures } from "@/lib/api";
-import { PopulationComposition } from "@/types/data";
+import { DataType, PopulationComposition } from "@/types/data";
 import { populationListToGraphData } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
-import { DataType } from "csstype";
 import { useState } from "react";
 
 type PopulationCompositions = Record<number, PopulationComposition>;
