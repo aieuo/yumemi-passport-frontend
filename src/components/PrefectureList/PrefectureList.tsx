@@ -14,7 +14,7 @@ export default function PrefectureList({
 }: PrefectureListProps) {
   return (
     <div
-      className="grid gap-4"
+      className="grid gap-x-4 gap-y-2"
       style={{
         gridTemplateColumns: "repeat(auto-fit, minmax(6rem, 1fr))",
       }}
