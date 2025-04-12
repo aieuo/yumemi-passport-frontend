@@ -26,7 +26,7 @@ export default function PopulationGraph({ populations }: PopulationGraphProps) {
       <LineChart
         margin={{
           top: 5,
-          left: 20,
+          left: 45,
           right: 20,
           bottom: 5,
         }}
@@ -41,7 +41,12 @@ export default function PopulationGraph({ populations }: PopulationGraphProps) {
           <Label position="insideBottom">年度</Label>
         </XAxis>
         <YAxis dataKey="value">
-          <Label angle={-90} position="insideLeft">
+          <Label
+            angle={-90}
+            position="insideLeft"
+            offset={-25}
+            style={{ textAnchor: "middle" }}
+          >
             人数
           </Label>
         </YAxis>
