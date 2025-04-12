@@ -52,7 +52,10 @@ export default function PopulationGraph({ populations }: PopulationGraphProps) {
             人数
           </Label>
         </YAxis>
-        <Tooltip />
+        <Tooltip
+          formatter={(value, name) => [`${value.toLocaleString()}人`, name]}
+          labelFormatter={(label) => `${label}年`}
+        />
         <Legend />
 
         {populations.map((data) => (
