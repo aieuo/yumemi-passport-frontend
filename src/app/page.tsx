@@ -62,6 +62,10 @@ export default function Home() {
       if (e instanceof Error) {
         alert(e.message);
       }
+
+      setSelectedPrefectures((selected) => {
+        return selected.filter((c) => c !== prefCode);
+      });
     }
   };
 
