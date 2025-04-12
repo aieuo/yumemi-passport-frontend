@@ -20,9 +20,23 @@ interface PopulationGraphProps {
   populations: PopulationGraphData[];
 }
 
+const generateColor = (n: number) => {
+  const hue = Math.floor(360 * (n / 47));
+  const saturation = 70;
+  const lightness = 60;
+
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
 export default function PopulationGraph({ populations }: PopulationGraphProps) {
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer
+      width="100%"
+      height="100%"
+      style={{
+        overflowY: "hidden",
+      }}
+    >
       <LineChart
         margin={{
           top: 5,
@@ -58,15 +72,20 @@ export default function PopulationGraph({ populations }: PopulationGraphProps) {
         />
         <Legend />
 
-        {populations.map((data) => (
-          <Line
-            dataKey="value"
-            data={data.data}
-            name={data.name}
-            key={data.name}
-            activeDot={{ r: 5 }}
-          />
-        ))}
+        {populations.map((data, i) => {
+          const color = generateColor(i);
+
+          return (
+            <Line
+              dataKey="value"
+              data={data.data}
+              name={data.name}
+              key={data.name}
+              stroke={color}
+              activeDot={{ r: 5, fill: color }}
+            />
+          );
+        })}
       </LineChart>
     </ResponsiveContainer>
   );
