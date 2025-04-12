@@ -72,8 +72,8 @@ export default function PopulationGraph({ populations }: PopulationGraphProps) {
         />
         <Legend />
 
-        {populations.map((data, i) => {
-          const color = generateColor(i);
+        {populations.map((data) => {
+          const color = generateColor(data.prefecture.prefCode - 1);
 
           return (
             <Line
