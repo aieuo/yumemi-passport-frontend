@@ -13,7 +13,12 @@ export default function PrefectureList({
   onChecked,
 }: PrefectureListProps) {
   return (
-    <div className="flex flex-wrap gap-4">
+    <div
+      className="grid justify-items-start gap-x-4 gap-y-2"
+      style={{
+        gridTemplateColumns: "repeat(auto-fit, minmax(6rem, 1fr))",
+      }}
+    >
       {prefectures.map((prefecture) => (
         <CheckBox
           label={prefecture.prefName}

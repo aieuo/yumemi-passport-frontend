@@ -18,7 +18,7 @@ export default function CheckBox({
       <input
         type="checkbox"
         className={
-          "h-4 w-4 rounded-md border-gray-300 bg-gray-100 disabled:pointer-events-none"
+          "h-4 w-4 cursor-pointer rounded-md border-gray-300 bg-gray-100 disabled:pointer-events-none"
         }
         checked={checked}
         disabled={disabled}
