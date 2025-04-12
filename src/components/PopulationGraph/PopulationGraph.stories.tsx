@@ -27,12 +27,12 @@ const generateData = () => [
 ];
 
 const data1: PopulationGraphData = {
-  name: "東京",
+  prefecture: { prefName: "東京", prefCode: 0 },
   data: generateData(),
 };
 
 const data2: PopulationGraphData = {
-  name: "大阪",
+  prefecture: { prefName: "大阪", prefCode: 0 },
   data: generateData(),
 };
 

@@ -7,9 +7,9 @@ export function populationListToGraphData(
   selectedPrefectures: number[],
   dataType: string,
 ): PopulationGraphData[] {
-  const prefectureCodeToName: Record<number, string> = {};
+  const prefectureCodeToObject: Record<number, Prefecture> = {};
   for (const prefecture of prefectures) {
-    prefectureCodeToName[prefecture.prefCode] = prefecture.prefName;
+    prefectureCodeToObject[prefecture.prefCode] = prefecture;
   }
 
   const result: PopulationGraphData[] = [];
@@ -21,11 +21,13 @@ export function populationListToGraphData(
     for (const data of populations[code]) {
       if (data.label === dataType) {
         result.push({
-          name: prefectureCodeToName[code],
+          prefecture: prefectureCodeToObject[code],
           data: data.data,
         });
       }
     }
   }
-  return result;
+  return result.toSorted(
+    (a, b) => a.prefecture.prefCode - b.prefecture.prefCode,
+  );
 }

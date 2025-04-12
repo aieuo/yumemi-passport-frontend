@@ -1,4 +1,4 @@
-import { Population } from "@/types/data";
+import { Population, Prefecture } from "@/types/data";
 import {
   CartesianGrid,
   Label,
@@ -12,7 +12,7 @@ import {
 } from "recharts";
 
 export interface PopulationGraphData {
-  name: string;
+  prefecture: Prefecture;
   data: Population[];
 }
 
@@ -79,8 +79,8 @@ export default function PopulationGraph({ populations }: PopulationGraphProps) {
             <Line
               dataKey="value"
               data={data.data}
-              name={data.name}
-              key={data.name}
+              name={data.prefecture.prefName}
+              key={data.prefecture.prefName}
               stroke={color}
               activeDot={{ r: 5, fill: color }}
             />
