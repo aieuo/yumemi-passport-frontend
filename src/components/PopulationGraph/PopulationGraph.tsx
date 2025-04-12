@@ -37,6 +37,8 @@ export default function PopulationGraph({ populations }: PopulationGraphProps) {
           type="number"
           domain={["dataMin", "dataMax"]}
           height={50}
+          tickCount={populations[0]?.data?.length || 0}
+          angle={-15}
         >
           <Label position="insideBottom">年度</Label>
         </XAxis>
