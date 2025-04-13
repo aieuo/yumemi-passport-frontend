@@ -8,6 +8,7 @@ const config: Config = {
     "^.+\\.(js|jsx)$": ["babel-jest", { presets: ["next/babel"] }],
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  testPathIgnorePatterns: ["<rootDir>/tests/e2e/"],
 };
 
 export default config;
