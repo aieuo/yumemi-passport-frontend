@@ -39,7 +39,7 @@ test.describe("トップページ", () => {
     const tokyo = prefectureList.getByText("東京都");
     await tokyo.click();
 
-    const checkbox = tokyo.locator("..").locator("input");
+    const checkbox = tokyo.locator("xpath=preceding-sibling::input");
     await expect(checkbox).toBeChecked();
 
     const graph = page.locator(".recharts-wrapper");
