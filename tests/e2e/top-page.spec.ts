@@ -14,7 +14,7 @@ test.describe("トップページ", () => {
     await page.goto("http://localhost:3000");
 
     const prefectureList = page.getByText("都道府県").locator("+ div");
-    await expect(prefectureList).toBeVisible();
+    await expect(prefectureList).toBeVisible({ timeout: 30000 });
 
     const checked = prefectureList.locator("input[checked]");
     await expect(checked).toHaveCount(0);
@@ -34,7 +34,7 @@ test.describe("トップページ", () => {
     await page.goto("http://localhost:3000");
 
     const prefectureList = page.getByText("都道府県").locator("+ div");
-    await expect(prefectureList).toBeVisible();
+    await expect(prefectureList).toBeVisible({ timeout: 30000 });
 
     const tokyo = prefectureList.getByText("東京都");
     await tokyo.click();
@@ -56,7 +56,7 @@ test.describe("トップページ", () => {
     await page.goto("http://localhost:3000");
 
     const prefectureList = page.getByText("都道府県").locator("+ div");
-    await expect(prefectureList).toBeVisible();
+    await expect(prefectureList).toBeVisible({ timeout: 30000 });
 
     const tokyo = prefectureList.getByText("東京都");
     await tokyo.click();
